@@ -1,0 +1,32 @@
+import pandas as pd
+#allow for us to put the information into a list
+import requests
+from bs4 import BeautifulSoup
+#BeautifulSoup allows for us to retrieve information and then sort it using the functions within requests
+
+page = requests.get("https://www.thedailybeast.com/")
+soup = BeautifulSoup(page.content, 'html.parser')
+news = soup.find(id='root')
+news_headlines = news.find_all(class_='TrackingLink _3Zn83' )
+
+
+
+l = news_headlines
+#I added a simple variable to allow for simple listing functions
+
+information=(
+    ("The Daily Beast                                "),
+    (l[0]),
+    (l[1]),
+    (l[2]),
+    (l[3]),
+    (l[4]),
+)
+#Indexing the information allows for easy viewing 
+
+
+information = pd.DataFrame(
+    {'News Headlines                                    ': information}
+)
+
+print(information)
