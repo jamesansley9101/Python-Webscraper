@@ -1,0 +1,42 @@
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+import PySimpleGUI as sg
+
+page = requests.get("https://www.thedailybeast.com/")
+soup = BeautifulSoup(page.content, 'html.parser')
+news = soup.find(id='root')
+news_headlines = news.find_all(class_='TrackingLink _3Zn83' )
+
+l = news_headlines
+
+information=(
+    ("The Daily Beast                                "),
+    (l[0]),
+    (l[1]),
+    (l[2]),
+    (l[3]),
+    (l[4]),
+)
+
+information = pd.DataFrame(
+    {'News Headlines                                    ': information}
+)
+
+# Test 1 for testing purposes: print(information)
+# Continue to implement code if Test 1 Succeeds
+
+x = "Hello"
+
+
+layout = [[sg.Text(information)], [sg.Button("OK")]]
+
+window = sg.Window("Demo", layout)
+
+while True:
+    event, values = window.read()
+    if event == "OK" or event == sg.WIN_CLOSED:
+        break
+
+window.close()
+
